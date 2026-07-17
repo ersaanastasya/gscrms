@@ -1,0 +1,79 @@
+body{
+
+    background:var(--body);
+
+}
+
+.wrapper{
+
+    min-height:100vh;
+
+}
+
+.main-content{
+
+    margin-left:270px;
+
+    margin-top:72px;
+
+    padding:30px;
+
+}
+
+.page-title{
+
+    font-size:28px;
+
+    font-weight:700;
+
+}
+
+.page-subtitle{
+
+    color:var(--text-secondary);
+
+}
+
+.content-wrapper{
+
+    margin-top:25px;
+
+}
+
+/* =========================================
+   Layout Wrapper
+========================================= */
+
+.wrapper{
+
+    display:flex;
+
+    min-height:100vh;
+
+    flex-direction:column;
+
+}
+
+.main-content{
+
+    flex:1;
+
+    margin-left:270px;
+
+    margin-top:72px;
+
+    padding:30px;
+
+}
+
+/* =========================================
+   Footer
+========================================= */
+
+.footer{
+
+    margin-left:270px;
+
+    background:#fff;
+
+}

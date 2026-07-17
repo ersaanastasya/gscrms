@@ -1,0 +1,45 @@
+.card{
+
+    border:none;
+
+    border-radius:16px;
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+.btn-primary{
+
+    background:var(--primary);
+
+    border:none;
+
+    border-radius:10px;
+
+}
+
+.btn-primary:hover{
+
+    background:var(--primary-hover);
+
+}
+
+.form-control{
+
+    border-radius:10px;
+
+}
+
+.badge{
+
+    border-radius:8px;
+
+    padding:6px 10px;
+
+}
+
+.table{
+
+    vertical-align:middle;
+
+}
