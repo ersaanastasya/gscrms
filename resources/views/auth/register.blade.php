@@ -1,52 +1,139 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+@extends('layouts.auth')
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+@section('title', 'Register - GSCRMS')
+
+@section('content')
+
+<div class="card shadow-lg border-0 rounded-4">
+
+    <div class="card-body p-5">
+
+        <div class="text-center mb-4">
+
+            <h2 class="fw-bold text-primary">
+                GSCRMS
+            </h2>
+
+            <p class="text-muted mb-0">
+                Global Supply Chain Risk Monitoring System
+            </p>
+
+            <small class="text-secondary">
+                Create your account
+            </small>
+
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        <form method="POST" action="{{ route('register') }}">
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            @csrf
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+            <div class="mb-3">
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+                <label class="form-label">
+                    Full Name
+                </label>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                <input
+                    type="text"
+                    name="name"
+                    value="{{ old('name') }}"
+                    class="form-control @error('name') is-invalid @enderror"
+                    required
+                    autofocus>
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+                @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
+            </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+            <div class="mb-3">
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+                <label class="form-label">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    class="form-control @error('email') is-invalid @enderror"
+                    required>
+
+                @error('email')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    class="form-control @error('password') is-invalid @enderror"
+                    required>
+
+                @error('password')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+
+            </div>
+
+            <div class="mb-4">
+
+                <label class="form-label">
+                    Confirm Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    class="form-control"
+                    required>
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-primary w-100">
+
+                Register
+
+            </button>
+
+            <div class="text-center mt-4">
+
+                <small class="text-muted">
+
+                    Already have an account?
+
+                    <a href="{{ route('login') }}"
+                       class="text-decoration-none">
+
+                        Login here
+
+                    </a>
+
+                </small>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@endsection

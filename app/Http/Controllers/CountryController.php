@@ -2,60 +2,89 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\CountryService;
+use App\Models\Country;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class CountryController extends Controller
 {
-    protected CountryService $countryService;
+   public function index(Request $request)
+{
+    $query = Country::query();
 
-    public function __construct(CountryService $countryService)
-    {
-        $this->countryService = $countryService;
+    if ($request->filled('search')) {
+        $query->where('name', 'like', '%' . $request->search . '%')
+              ->orWhere('code', 'like', '%' . $request->search . '%')
+              ->orWhere('capital', 'like', '%' . $request->search . '%');
     }
 
-    /**
-     * Daftar semua negara
-     */
-    public function index(): View
+    if ($request->filled('region')) {
+        $query->where('region', $request->region);
+    }
+
+    $countries = $query
+        ->orderBy('name')
+        ->paginate(20)
+        ->withQueryString();
+
+    $regions = Country::select('region')
+        ->whereNotNull('region')
+        ->distinct()
+        ->orderBy('region')
+        ->pluck('region');
+
+    return view('countries.index', compact(
+        'countries',
+        'regions'
+    ));
+}
+    public function show(Country $country)
     {
-        $countries = $this->countryService->getAllCountries();
+        return view('countries.show', compact('country'));
+    }
+    public function create()
+    {
+        return view('countries.create');
+    }
 
-        return view('countries.index', [
-
-            'countries' => $countries
-
+    public function store(Request $request)
+    {
+        $request->validate([
+            'country_name' => 'required|max:100',
+            'country_code' => 'required|max:10|unique:countries,country_code',
         ]);
+
+        Country::create($request->all());
+
+        return redirect()
+            ->route('countries.index')
+            ->with('success', 'Country berhasil ditambahkan.');
     }
 
-    /**
-     * Detail negara
-     */
-    public function show(string $countryCode): View
+    public function edit(Country $country)
     {
-        $country = $this->countryService
-            ->getCountry($countryCode);
+        return view('countries.edit', compact('country'));
+    }
 
-        abort_if(!$country, 404);
-
-        return view('countries.show', [
-
-            'country' => $country
-
+    public function update(Request $request, Country $country)
+    {
+        $request->validate([
+            'country_name' => 'required|max:100',
+            'country_code' => 'required|max:10|unique:countries,country_code,' . $country->id,
         ]);
+
+        $country->update($request->all());
+
+        return redirect()
+            ->route('countries.index')
+            ->with('success', 'Country berhasil diperbarui.');
     }
 
-    /**
-     * Pencarian negara
-     */
-    public function search(Request $request)
+    public function destroy(Country $country)
     {
-        $keyword = $request->keyword;
+        $country->delete();
 
-        $countries = $this->countryService
-            ->search($keyword);
-
-        return response()->json($countries);
+        return redirect()
+            ->route('countries.index')
+            ->with('success', 'Country berhasil dihapus.');
     }
 }

@@ -1,17 +1,36 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+<!DOCTYPE html>
+<html>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout>
+<head>
+    <title>Global Supply Chain Risk Monitoring</title>
+</head>
+
+<body>
+
+    <h1>Dashboard GSCRMS</h1>
+
+    <hr>
+
+    <h3>Total Data</h3>
+
+    <ul>
+        <li>Total Shipment : {{ $shipmentCount }}</li>
+        <li>Total Country : {{ $countryCount }}</li>
+        <li>Total Port : {{ $portCount }}</li>
+        <li>Total Article : {{ $articleCount }}</li>
+    </ul>
+
+    <hr>
+
+    <h3>Risk Summary</h3>
+
+    <ul>
+        <li>Low : {{ $riskSummary['low'] }}</li>
+        <li>Medium : {{ $riskSummary['medium'] }}</li>
+        <li>High : {{ $riskSummary['high'] }}</li>
+        <li>Critical : {{ $riskSummary['critical'] }}</li>
+    </ul>
+
+</body>
+
+</html>

@@ -2,138 +2,69 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Country extends Model
 {
     use HasFactory;
 
-    /**
-     * Nama tabel
-     */
-    protected $table = 'countries';
-
-    /**
-     * Primary Key
-     */
-    protected $primaryKey = 'id';
-
-    /**
-     * Mass Assignment
-     */
     protected $fillable = [
-
-        'country_code',
-
-        'country_name',
-
-        'official_name',
-
+        'code',
+        'name',
         'capital',
-
         'region',
-
         'subregion',
-
-        'latitude',
-
-        'longitude',
-
-        'flag_png',
-
-        'flag_svg',
-
+        'currency',
         'currency_code',
+        'latitude',
+        'longitude',
+        'flag',
+    ];
 
-        'currency_name',
-
-        'timezone',
-
+    protected $casts = [
+        'latitude' => 'double',
+        'longitude' => 'double',
     ];
 
     /**
-     * Casting
+     * Country has many statistics.
      */
-    protected $casts = [
+    public function statistics(): HasMany
+    {
+        return $this->hasMany(CountryStatistic::class);
+    }
 
-        'latitude' => 'double',
-
-        'longitude' => 'double',
-
-    ];
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONSHIPS
-    |--------------------------------------------------------------------------
-    */
-
-        /**
-         * Statistik negara
-         */
-        public function statistics()
-        {
-            return $this->hasMany(CountryStatistic::class);
-        }
-
-        /**
-         * Risk Score
-         */
-        public function riskScore()
-        {
-            return $this->hasOne(RiskScore::class);
-        }
-
-        /**
-         * Ports
-         */
-        public function ports()
-        {
-            return $this->hasMany(Port::class);
-        }
-    
-    /*
-    |---/**
-     * Favorite
+    /**
+     * Country has many ports.
      */
-    public function favorites()
+    public function ports(): HasMany
+    {
+        return $this->hasMany(Port::class);
+    }
+
+    /**
+     * Country has many weather cache records.
+     */
+    public function weatherCaches(): HasMany
+    {
+        return $this->hasMany(WeatherCache::class);
+    }
+
+    /**
+     * Country has many favorites.
+     */
+    public function favorites(): HasMany
     {
         return $this->hasMany(Favorite::class);
     }
-    /*-------------------------------------------------------------------
-    | ACCESSORS
-    |--------------------------------------------------------------------------
-    */
 
     /**
-     * Nama + Kode
+     * Country has many risk scores.
      */
-    public function getDisplayNameAttribute()
+    public function riskScores(): HasMany
     {
-        return "{$this->country_name} ({$this->country_code})";
-    }
-
-    /**
-     * Flag
-     */
-    public function getFlagAttribute()
-    {
-        return $this->flag_png;
-    }
-
-    /**
-     * Coordinates
-     */
-    public function getCoordinatesAttribute()
-    {
-        return [
-
-            'lat' => $this->latitude,
-
-            'lng' => $this->longitude
-
-        ];
+        return $this->hasMany(RiskScore::class);
     }
 }
-

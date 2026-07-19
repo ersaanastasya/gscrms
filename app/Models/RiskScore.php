@@ -4,51 +4,42 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RiskScore extends Model
 {
     use HasFactory;
 
-    protected $table = 'risk_scores';
-
+    /**
+     * Mass Assignment
+     */
     protected $fillable = [
-
-        'country_id',
-
+        'shipment_id',
         'weather_score',
-
-        'inflation_score',
-
-        'currency_score',
-
         'news_score',
-
+        'delay_score',
         'total_score',
-
         'risk_level',
-
-        'calculated_at'
-
+        'recommendation',
+        'calculated_at',
     ];
 
+    /**
+     * Attribute Casting
+     */
     protected $casts = [
-
         'weather_score' => 'decimal:2',
-
-        'inflation_score' => 'decimal:2',
-
-        'currency_score' => 'decimal:2',
-
         'news_score' => 'decimal:2',
-
+        'delay_score' => 'decimal:2',
         'total_score' => 'decimal:2',
-
         'calculated_at' => 'datetime',
-
     ];
 
-    public function country()
+    /**
+     * Risk Score belongs to one Shipment.
+     */
+    public function shipment(): BelongsTo
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Shipment::class);
     }
 }

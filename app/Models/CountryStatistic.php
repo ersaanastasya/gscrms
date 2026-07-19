@@ -4,62 +4,35 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CountryStatistic extends Model
 {
     use HasFactory;
 
-    protected $table = 'country_statistics';
-
     protected $fillable = [
-
         'country_id',
-
-        'gdp',
-
-        'gdp_growth',
-
-        'inflation',
-
-        'unemployment',
-
         'population',
-
-        'population_growth',
-
-        'exports',
-
-        'imports',
-
-        'data_year',
-
-        'last_synced_at'
-
+        'area',
+        'gdp',
+        'inflation',
+        'unemployment',
+        'updated_date',
     ];
 
     protected $casts = [
-
-        'gdp' => 'decimal:2',
-
-        'gdp_growth' => 'decimal:2',
-
-        'inflation' => 'decimal:2',
-
-        'unemployment' => 'decimal:2',
-
         'population' => 'integer',
-
-        'population_growth' => 'decimal:2',
-
-        'exports' => 'decimal:2',
-
-        'imports' => 'decimal:2',
-
-        'last_synced_at' => 'datetime',
-
+        'area' => 'decimal:2',
+        'gdp' => 'decimal:2',
+        'inflation' => 'decimal:2',
+        'unemployment' => 'decimal:2',
+        'updated_date' => 'date',
     ];
 
-    public function country()
+    /**
+     * Statistic belongs to one country.
+     */
+    public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
     }

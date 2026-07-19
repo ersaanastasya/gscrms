@@ -2,33 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
+use App\Models\Country;
+use App\Models\Port;
+use App\Models\Shipment;
+use App\Models\RiskScore;
+use App\Models\Article;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display the dashboard.
-     */
-    public function index(): View
+    public function index()
     {
-        return view('dashboard.index', [
-            'pageTitle' => 'Dashboard',
-            'pageDescription' => 'Global Supply Chain Risk Monitoring System',
+        $countries = Country::count();
+        $ports = Port::count();
+        $shipments = Shipment::count();
 
-            // Statistik Global (sementara kosong)
-            'totalCountries' => 0,
-            'highRiskCountries' => 0,
-            'averageRiskScore' => 0,
-            'todayNews' => 0,
+        $highRisk = RiskScore::where('risk_level', 'High')->count();
 
-            // Data untuk widget
-            'selectedCountry' => null,
-            'weather' => null,
-            'currency' => null,
-            'statistics' => null,
-            'riskScore' => null,
-            'ports' => [],
-            'news' => [],
-        ]);
+        $recentShipments = Shipment::latest()->take(5)->get();
+
+        $articles = Article::latest()->take(5)->get();
+
+        return view('dashboard.index', compact(
+            'countries',
+            'ports',
+            'shipments',
+            'highRisk',
+            'recentShipments',
+            'articles'
+        ));
     }
 }

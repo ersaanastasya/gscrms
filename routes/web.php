@@ -25,14 +25,14 @@ Route::middleware(['auth'])->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::get('/countries', [CountryController::class, 'index'])
-        ->name('countries.index');
-
-    Route::get('/countries/search', [CountryController::class, 'search'])
-        ->name('countries.search');
+    Route::get('/countries', [CountryController::class,'index'])
+    ->name('countries.index');
 
     Route::get('/countries/{country}', [CountryController::class, 'show'])
         ->name('countries.show');
+
+    Route::get('/countries/search', [CountryController::class, 'search'])
+        ->name('countries.search');
 
     /*
     |--------------------------------------------------------------------------
@@ -43,8 +43,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/monitoring', [MonitoringController::class, 'index'])
         ->name('monitoring.index');
 
-    Route::get('/monitoring/{country}', [MonitoringController::class, 'show'])
-        ->name('monitoring.show');
+    Route::get('/monitoring/{shipment}', [MonitoringController::class, 'show'])
+    ->name('monitoring.show');
 
     /*
     |--------------------------------------------------------------------------
