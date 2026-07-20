@@ -55,10 +55,10 @@ class Country extends Model
     /**
      * Country has many favorites.
      */
-    public function favorites(): HasMany
-    {
-        return $this->hasMany(Favorite::class);
-    }
+    public function favorites()
+{
+    return $this->hasMany(Favorite::class);
+}
 
     /**
      * Country has many risk scores.

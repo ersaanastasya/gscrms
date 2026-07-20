@@ -96,6 +96,7 @@
                 <th>Region</th>
                 <th>Currency</th>
                 <th>Action</th>
+               
 
             </tr>
 
@@ -126,15 +127,38 @@
 
                 <td>{{ $country->currency }}</td>
 
-                <td>
+               <td>
 
     <a href="{{ route('countries.show', $country->id) }}"
-   class="btn btn-info btn-sm">
+       class="btn btn-info btn-sm">
+        Detail
+    </a>
 
-    Detail
+<hr>
+@if(in_array($country->id, $favoriteIds))
 
-</a>
+    <button class="btn btn-success btn-sm" disabled>
+        <i class="fas fa-check"></i> Favorited
+    </button>
 
+@else
+
+    <form action="{{ route('favorites.store', ['country' => $country->id]) }}"
+          method="POST"
+          style="display:inline;">
+
+        @csrf
+
+        <button type="submit"
+                class="btn btn-warning btn-sm">
+
+            <i class="fas fa-heart"></i>
+
+        </button>
+
+    </form>
+
+@endif
 </td>
 
             </tr>

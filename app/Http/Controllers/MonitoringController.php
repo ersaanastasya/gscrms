@@ -27,7 +27,39 @@ class MonitoringController extends Controller
         'destinationPort.country',
         'riskScore'
     ]);
+    $originLat =
+$shipment->originPort->latitude;
 
-    return view('monitoring.show', compact('shipment'));
+$originLng =
+$shipment->originPort->longitude;
+
+$destinationLat =
+$shipment->destinationPort->latitude;
+
+$destinationLng =
+$shipment->destinationPort->longitude;
+
+$progress = 0.65;
+
+$currentLat =
+$originLat +
+(($destinationLat-$originLat)*$progress);
+
+$currentLng =
+$originLng +
+(($destinationLng-$originLng)*$progress);
+
+return view(
+'monitoring.show',
+compact(
+'shipment',
+'originLat',
+'originLng',
+'destinationLat',
+'destinationLng',
+'currentLat',
+'currentLng'
+));
+
 }
 }

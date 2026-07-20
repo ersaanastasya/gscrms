@@ -15,23 +15,16 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('user_id')
-                ->constrained('users')
-                ->cascadeOnUpdate()
+                ->constrained()
                 ->cascadeOnDelete();
 
-            $table->foreignId('shipment_id')
-                ->nullable()
-                ->constrained('shipments')
-                ->nullOnDelete()
-                ->cascadeOnUpdate();
-
             $table->foreignId('country_id')
-                ->nullable()
-                ->constrained('countries')
-                ->nullOnDelete()
-                ->cascadeOnUpdate();
+                ->constrained()
+                ->cascadeOnDelete();
 
             $table->timestamps();
+
+            $table->unique(['user_id', 'country_id']);
         });
     }
 

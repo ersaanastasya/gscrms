@@ -13,21 +13,20 @@ class Article extends Model
      * Mass Assignment
      */
     protected $fillable = [
-        'title',
-        'slug',
-        'content',
-        'image',
-        'category',
-        'author',
-        'published_at',
-        'is_published',
-    ];
+    'title',
+    'slug',
+    'summary',
+    'content',
+    'author',
+    'image',
+    'status',
+    'published_at',
+];
 
     /**
      * Attribute Casting
      */
     protected $casts = [
-        'published_at' => 'datetime',
-        'is_published' => 'boolean',
-    ];
+    'published_at' => 'datetime',
+];
 }

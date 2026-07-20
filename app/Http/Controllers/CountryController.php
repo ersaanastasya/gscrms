@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use Illuminate\Http\Request;
+use App\Models\Favorite;
 
 class CountryController extends Controller
 {
@@ -32,10 +33,15 @@ class CountryController extends Controller
         ->orderBy('region')
         ->pluck('region');
 
-    return view('countries.index', compact(
-        'countries',
-        'regions'
-    ));
+    $favoriteIds = Favorite::where('user_id', auth()->id())
+    ->pluck('country_id')
+    ->toArray();
+
+   return view('countries.index', compact(
+    'countries',
+    'regions',
+    'favoriteIds'
+));
 }
     public function show(Country $country)
     {

@@ -75,4 +75,5 @@ class RiskScoreSeeder extends Seeder
             ],
         ]);
     }
+    
 }
